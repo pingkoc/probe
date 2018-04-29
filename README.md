@@ -2,4 +2,4 @@
 
 ## How to run
 
-sudo tcpdump -l -s 256 -e -i en0 type mgt subtype probe-req | python3 parser.py
+IFACE="en0" sudo tcpdump  -l -e -I -i $IFACE type mgt subtype probe-req | python3 parser.py
