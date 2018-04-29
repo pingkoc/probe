@@ -72,7 +72,8 @@ class PacketCollection:
         packet_vendor = self.vendordb.find_vendor(packet.sa)
         if packet_vendor == "UNRESOLVED":
             self.unresolved_sa_set.add(packet.sa)
-        self.sa_to_vendor[packet.sa] = packet_vendor
+        else:
+            self.sa_to_vendor[packet.sa] = packet_vendor
 
 
 # vendordb = VendorDB(vendorDB_name)
