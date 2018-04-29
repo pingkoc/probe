@@ -4,7 +4,14 @@ import re
 from packet import Packet
 non_digit = re.compile(r'[^\d.]+')
 import re
+from packetcollection import VendorDB, PacketCollection
 
+# Create DB
+vendorDB_name = "oui.json"
+vendordb = VendorDB(vendorDB_name)
+packetdb = PacketCollection(vendordb)
+
+count = 0
 for l in sys.stdin:
     try:
         vs = l.split()
@@ -23,13 +30,18 @@ for l in sys.stdin:
         bssid = bssid[1:-1]
 
         for v in vs[start:-1]:
-                data_rates.append(float(non_digit.sub('', v)))
+            data_rates.append(float(non_digit.sub('', v)))
 
     except ValueError as e:
         print('Parse error', e)
         # for i in range(len(vs)):
         #     print(i, vs[i])
-            
-    p = Packet(sa, da, bssid, data_rates, signal_strength, timestamp)
-    print(p)
 
+    p = Packet(sa, da, bssid, data_rates, signal_strength, timestamp)
+    packetdb.handler(p)
+    count += 1
+    if count % 10 == 0:
+        print("Total Packets Received", count)
+        print("Total Addresses", packetdb.count_addresses_collected())
+        print("Resolved Addresses", packetdb.count_resolved_devices())
+        print("Unresolved Addresses", packetdb.count_unresolved_addresses())
