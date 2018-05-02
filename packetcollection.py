@@ -1,6 +1,6 @@
 from packet import Packet
+from datetime import datetime, timedelta
 import json
-
 vendorDB_name = "oui.json"
 
 
@@ -37,6 +37,8 @@ class PacketCollection:
         self.unresolved_sa_set = set()
         # vendor db is for vendor lookup to resolve randomized mac addresses
         self.vendordb = vendordb
+        self.realtime_sa_set = {}
+        self.EXPIRE_DELTA = timedelta(seconds=60)
 
     def count_addresses_collected(self):
         # TODO: Resolve randomized address
@@ -48,9 +50,25 @@ class PacketCollection:
     def count_unresolved_addresses(self):
         return len(self.unresolved_sa_set)
 
+    def realtime_sa_set_add(self, p):
+        self.realtime_sa_set[p.sa] = datetime.now()
+
+    def realtime_sa_set_size(self):
+        now = datetime.now()
+        remove_set = set()
+        for sa in self.realtime_sa_set.keys():
+            if now - self.realtime_sa_set[sa] > self.EXPIRE_DELTA:
+                remove_set.add(sa)
+        for sa in remove_set:
+            self.realtime_sa_set.pop(sa)
+        return len(self.realtime_sa_set)
+
+
     def handler(self, packet):
         # Collect all packets
         self.packet_list.append(packet)
+
+        self.realtime_sa_set_add(packet)
 
         # Store information about source address
         # TODO: Check here for valid address, Only keep smartphones and resolve MAC addresses
