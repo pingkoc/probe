@@ -2,7 +2,8 @@ from packet import Packet
 from datetime import datetime, timedelta
 import json
 vendorDB_name = "oui.json"
-
+smartphone_vendors = ['Apple', 'Htc', 'LgElectr', 'Motorola', 'HuaweiTe',
+                      'Google', 'SamsungE', 'OneplusT']
 
 class VendorDB:
     def __init__(self, mac_vendor_json_path):
@@ -20,9 +21,8 @@ class VendorDB:
             return self.mac_resolve_dict[mac[:8].upper()]
         return "UNRESOLVED"
 
-    # TODO
     def is_phone_vendor(self, vendor_name):
-        return False
+        return vendor_name in smartphone_vendors
 
 
 class PacketCollection:

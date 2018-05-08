@@ -1,7 +1,6 @@
 #!/bin/env python3
 import sys
 import re
-import re
 import pickle
 from datetime import datetime, timedelta
 from packet import Packet
