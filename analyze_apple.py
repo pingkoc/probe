@@ -10,6 +10,7 @@ with open("captured_packets-05011526.p", "rb") as f:
 
 austin_mac = "5C:AD:CF:1A:2F:BE".lower()  ## Austin
 michael_mac = "60:03:08:a1:15:d0".lower()  ## Michael
+pk_mac = "a4:34:d9:c4:c8:4f".lower()  ## PK
 date = "2018:05:01:"
 
 # All Apple Devices
@@ -34,7 +35,7 @@ for sa in target_sa_list:
 
 # Austin and Michael
 phone_laptop = []
-for sa in [austin_mac, michael_mac]:
+for sa in [austin_mac, michael_mac, pk_mac]:
     timestamps = pcollection.sa_to_timestamps[sa]
     times_do = [
         datetime.strptime(date + t, "%Y:%m:%d:%H:%M:%S.%f") for t in timestamps
@@ -47,9 +48,17 @@ for sa in [austin_mac, michael_mac]:
 
 plt.hist(prob_freq_list, bins=10, label="All Apple Devices")
 plt.axvline(
-    x=phone_laptop[0], label="iPhone 7 iOS 8", color="red", linestyle="-.")
+    x=phone_laptop[0], label="iPhone 7 iOS 12", color="red", linestyle="-.")
 plt.axvline(
-    x=phone_laptop[1], label="MacBookPro OSX", color="green", linestyle="--")
+    x=phone_laptop[1],
+    label="MacBookPro OSX 10.13",
+    color="green",
+    linestyle="--")
+plt.axvline(
+    x=phone_laptop[2],
+    label="Intel Wireless Chipset",
+    color="blue",
+    linestyle=":")
 plt.xlabel("Probe Period [s]")
 plt.ylabel("Devices Count")
 plt.legend()
