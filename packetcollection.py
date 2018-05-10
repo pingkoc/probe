@@ -38,7 +38,7 @@ class PacketCollection:
         # vendor db is for vendor lookup to resolve randomized mac addresses
         self.vendordb = vendordb
         self.realtime_sa_set = {}
-        self.EXPIRE_DELTA = timedelta(seconds=60)
+        self.EXPIRE_DELTA = timedelta(seconds=600)
 
     def count_addresses_collected(self):
         # TODO: Resolve randomized address
