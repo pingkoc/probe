@@ -51,14 +51,14 @@ try:
         if datetime.now() - last_timestamp > timedelta(seconds=3):
             last_timestamp = datetime.now()
             print(datetime.now())
-            print("Estimated Occupancy", packetdb.realtime_sa_set_size() / get_magic())
+            print("Estimated Occupancy", round(packetdb.realtime_sa_set_size() / get_magic()))
             print("Active device count", packetdb.realtime_sa_set_size())
-            print("Active device mac", packetdb.realtime_sa_set.keys())
-            print("Total Packets Received", len(packetdb.packet_list))
-            print("Total Addresses", packetdb.count_addresses_collected())
-            print("Resolved Addresses", packetdb.count_resolved_devices())
-            print("Vendors", packetdb.sa_to_vendor)
-            print("Unresolved Addresses", packetdb.count_unresolved_addresses())
+            # print("Active device mac", packetdb.realtime_sa_set.keys())
+            # print("Total Packets Received", len(packetdb.packet_list))
+            # print("Total Addresses", packetdb.count_addresses_collected())
+            # print("Resolved Addresses", packetdb.count_resolved_devices())
+            # print("Vendors", packetdb.sa_to_vendor)
+            # print("Unresolved Addresses", packetdb.count_unresolved_addresses())
             print("\n")
 except KeyboardInterrupt:
     output = 'captured_packets-' + datetime.now().strftime("%y-%d-%H:%M:%S") +'.p'
