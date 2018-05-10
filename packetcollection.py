@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import json
 vendorDB_name = "oui.json"
 smartphone_vendors = ['Apple', 'Htc', 'LgElectr', 'Motorola', 'HuaweiTe',
-                      'Google', 'SamsungE', 'OneplusT']
+                      'Google', 'SamsungE', 'OneplusT', 'Oppo', 'Xiaomi', 'Sony']
 
 class VendorDB:
     def __init__(self, mac_vendor_json_path):
